@@ -1,0 +1,43 @@
+    services:
+      payment_service:
+        image: payents_service:latest
+        build:
+          context: .
+          dockerfile: ./PaymentService.Api/Dockerfile
+        ports:
+          - "${EXTERNAL_PORT}:8080"
+        depends_on: 
+          - sqlserver
+        environment:
+          - ConnectionStrings__PaymentsDb=Server=sqlserver;Database=Payments;User Id=sa;Password=${SQL_SA_PASSWORD};
+        networks:
+          - appnetwork
+
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        container_name: sqlserver
+        environment:
+          SA_PASSWORD: "${SQL_SA_PASSWORD}"
+          ACCEPT_EULA: "Y"
+        ports:
+          - "1433:1433"
+        volumes:
+          - sqlserverdata:/var/opt/mssql
+        networks:
+          - appnetwork
+
+      init_db:
+        image: mcr.microsoft.com/mssql-tools
+        depends_on:
+          - sqlserver
+        entrypoint: /bin/bash -c "sleep 30 && /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P ${SQL_SA_PASSWORD} -i /init.sql"
+        volumes:
+        - ./init.sql:/init.sql
+        networks:
+        - appnetwork
+
+    volumes:
+      sqlserverdata:
+
+    networks:
+      appnetwork:
