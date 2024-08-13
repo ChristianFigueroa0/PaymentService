@@ -1,0 +1,121 @@
+{
+	"info": {
+		"_postman_id": "5ad13053-8e56-4cb2-b4bc-9b1f52240690",
+		"name": "PaymentService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8778688",
+		"_collection_link": "https://crimson-spaceship-89822.postman.co/workspace/ZonaDigital~ffcd5ee3-cf3d-4133-9771-1eb05ccca7d1/collection/8778688-5ad13053-8e56-4cb2-b4bc-9b1f52240690?action=share&source=collection_link&creator=8778688"
+	},
+	"item": [
+		{
+			"name": "Payments",
+			"item": [
+				{
+					"name": "AddPayment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Payment description\",\r\n    \"qtyProducts\": 3,\r\n    \"sender\": \"Christian\",\r\n    \"receiver\": \"Alexis\",\r\n    \"amount\": 500.2100,\r\n    \"status\": \"Pending\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}/api/payments/",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"api",
+								"payments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetStatus",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/api/payments/e18efcbc-3dd5-4359-90c7-63a544db22dc/status",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"api",
+								"payments",
+								"e18efcbc-3dd5-4359-90c7-63a544db22dc",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SetStatus",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"paymentId\": \"0c2e73c9-0f23-4b8a-bcd2-70d477714592\",\r\n  \"status\": \"Cancelled\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}/api/payments/setStatus",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"api",
+								"payments",
+								"setStatus"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Url",
+			"value": "http://localhost:5001",
+			"type": "string"
+		}
+	]
+}
